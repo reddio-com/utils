@@ -54,3 +54,11 @@ func GetBlockChainAuthAndClient(RPCAddr string, PrivateKey string, chainID int64
 	// Deploy a new awesome contract for the binding demo
 	return client, auth, nil
 }
+
+func GetReadOnlyEthClientWithoutAuth(url string) (*ethclient.Client, error) {
+	client, err := ethclient.Dial(url)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get client: %w", err)
+	}
+	return client, err
+}
