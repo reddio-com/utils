@@ -12,7 +12,7 @@ import (
 )
 
 // GetBlockChainAuthAndClient gets blocal chain auth and client
-func GetBlockChainAuthAndClient(RPCAddr string, PrivateKey string, chainID int64, value int64) (*ethclient.Client, *bind.TransactOpts, error) {
+func GetBlockChainAuthAndClient(RPCAddr string, PrivateKey string, chainID int64, value int64, gasLimit int64) (*ethclient.Client, *bind.TransactOpts, error) {
 	client, err := ethclient.Dial(RPCAddr)
 	if err != nil {
 		return nil, nil, err
@@ -47,8 +47,8 @@ func GetBlockChainAuthAndClient(RPCAddr string, PrivateKey string, chainID int64
 		auth = bind.NewKeyedTransactor(privateKey)
 	}
 	auth.Nonce = big.NewInt(int64(nonce))
-	auth.Value = big.NewInt(value) // when deploy contract. this should not set
-	auth.GasLimit = uint64(5000000) // in units
+	auth.Value = big.NewInt(value)   // when deploy contract. this should not set
+	auth.GasLimit = uint64(gasLimit) // in units
 	auth.GasPrice = price
 
 	// Deploy a new awesome contract for the binding demo
